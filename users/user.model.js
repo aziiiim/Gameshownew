@@ -8,6 +8,7 @@ function model(sequelize) {
         lastName: { type: DataTypes.STRING, allowNull: false },
         username: { type: DataTypes.STRING, allowNull: false },
         hash: { type: DataTypes.STRING, allowNull: false },
+        phoneNo: { type: DataTypes.STRING, allowNull: false },
         imgPath: { type: DataTypes.STRING, allowNull: false }
     };
 

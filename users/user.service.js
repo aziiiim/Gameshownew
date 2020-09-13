@@ -29,6 +29,9 @@ async function authenticate({ username, password }) {
     // authentication successful
     const token = jwt.sign({ sub: user.id }, config.secret, { expiresIn: '7d' });
     return { ...omitHash(user.get()), token };
+    router.get('/', authorize(), getAll);
+
+
 }
 
 async function getAll() {
@@ -41,7 +44,7 @@ async function getById(id) {
 
 async function create(params) {
     // validate
-
+console.log(params.body+ "body",params.files)
      if (await db.User.findOne({ where: { username: params.body.username } })) {
          throw 'Username "' + params.body.username + '" is already taken';
      }
@@ -64,6 +67,7 @@ async function create(params) {
         lastName: params.body.lastName,
         username: params.body.username,
         hash: params.body.hash,
+        phoneNo: params.body.phoneNo,
         imgPath: name
     };
 
@@ -109,14 +113,15 @@ console.log(data,"data")
 }
 
 async function  resetPassword(params) {
-    var email = jwt_decode(params.body.id,{payload:true});
-    console.log(email.payload.email.email,'1');
+    //var email = jwt_decode(params.body.id,{payload:true});
+    var email = params.body.id;
+    //console.log(email.payload.email.email,'1');
     const sequelize = new Sequelize('gameshow', 'root', null, {
         dialect: 'mysql'
       })
-      console.log(email.payload.email,'2');
+     // console.log(email.payload.email,'2');
        const pass = await bcrypt.hash(params.body.password, 10);
-      const records = await sequelize.query(`UPDATE users SET hash='${pass}' WHERE username='${email.payload.email.email}'`, {
+      const records = await sequelize.query(`UPDATE users SET hash='${pass}' WHERE username='${email}'`, {
           //type: QueryTypes.UPDATE
 
         }); 
@@ -140,6 +145,8 @@ async function getUser(id) {
 
 function omitHash(user) {
     const { hash, ...userWithoutHash } = user;
+   
+console.log(user,".......");
     return userWithoutHash;
 }
 
@@ -153,18 +160,18 @@ async function emailSend(d) {
     var transporter = nodemailer.createTransport({
         service: 'gmail',
         auth: {
-          user: 'muhammadnomankhalid480@gmail.com',
-          pass: '18anatomy'
+          user: '',
+          pass: '18anatomytj2'
         }
       });
       console.log(d,'2')
       var mailOptions = {
-        from: 'muhammadnomankhalid480@gmail.com',
+        from: 'your email',
         to: d.email,
         subject: 'Password Reset',
         text: 'You are receiving this because you (or someone else) have requested the reset of the password for your account.\n\n' +
         'Please click on the following link, or paste this into your browser to complete the process:\n\n' +
-        'http://localhost:3000/users/reset?id='+token+'\n\n' +
+        'http://localhost:3000/resetpassword \n\n' +
         'If you did not request this, please ignore this email and your password will remain unchanged.\n'
       };
       console.log(d,'3')

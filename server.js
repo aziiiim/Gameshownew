@@ -2,6 +2,7 @@
 var expressfileupload  = require('express-fileupload');
 const express = require('express');
 const ejs = require('ejs');
+var path = require('path');
 const paypal = require('paypal-rest-sdk');
 paypal.configure({
     'mode': 'sandbox', //sandbox or live
@@ -21,8 +22,12 @@ app.use(cors());
 // api routes
 app.use('/users', require('./users/users.controller'));
 app.set('view engine', 'ejs');
-
+app.use(express.static(path.join(__dirname, '/content')));
 app.get('/', (req, res) => res.render('index'));
+app.get('/login', (req, res) => res.render('login'));
+app.get('/signup', (req, res) => res.render('signup'));
+app.get('/forget', (req, res) => res.render('forget'));
+app.get('/resetpassword', (req, res) => res.render('resetPassword'));
 
 app.post('/pay', (req, res) => {
     const create_payment_json = {

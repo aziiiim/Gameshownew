@@ -39,7 +39,8 @@ function registerSchema(req, res, next) {
         lastName: Joi.string().required(),
         username: Joi.string().required(),
         password: Joi.string().min(6).required(),
-        imgPath: Joi.string()
+        imgPath: Joi.string(),
+        phoneNo: Joi.string()
     });
     validateRequest(req, next, schema);
 }
@@ -52,7 +53,12 @@ function register(req, res, next) {
 
 function getAll(req, res, next) {
     userService.getAll()
-        .then(users => res.json(users))
+        .then(
+            
+            users => res.json(users)
+        
+        
+        )
         .catch(next);
 }
 

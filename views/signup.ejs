@@ -10,7 +10,7 @@
     <meta name="keywords" content="Colorlib Templates">
 
     <!-- Title Page-->
-    <title>Au Register Forms by Colorlib</title>
+    <title>Register Forms</title>
 
     <!-- Icons font CSS-->
     <link href="../signupPageContent/vendor/mdi-font/css/material-design-iconic-font.min.css" rel="stylesheet" media="all">
@@ -26,8 +26,8 @@
     <link href="../signupPageContent/css/main.css" rel="stylesheet" media="all">
 </head>
 
-<body style="background-color: white;" >
-    <div class="page-wrapper bg-gra-02 p-t-130 p-b-100 font-poppins">
+<body style="background-color:#81b840;" >
+    <div class="page-wrapper  p-t-130 p-b-100 font-poppins">
         <div class="wrapper wrapper--w680">
             <div class="card card-4">
                 <div class="card-body">
@@ -37,13 +37,13 @@
                             <div class="col-2">
                                 <div class="input-group">
                                     <label class="label">first name</label>
-                                    <input class="input--style-4" type="text" name="firstName">
+                                    <input class="input--style-4" type="text" required name="firstName">
                                 </div>
                             </div>
                             <div class="col-2">
                                 <div class="input-group">
                                     <label class="label">last name</label>
-                                    <input class="input--style-4" type="text" name="lastName">
+                                    <input class="input--style-4" type="text" required name="lastName">
                                 </div>
                             </div>
                         </div>
@@ -52,7 +52,7 @@
                                 <div class="input-group">
                                     <label class="label">Email</label>
                                     <div class="input-group-icon">
-                                        <input class="input--style-4" type="text" name="username">
+                                        <input class="input--style-4"  type="email" required name="email">
                                         <i class=""></i>
                                     </div>
                                 </div>
@@ -60,30 +60,51 @@
                             <div class="col-2">
                                 <div class="input-group">
                                     <label class="label">Phone Number</label>
-                                    <input class="input--style-4" type="text" name="phoneNo">
+                                    <input class="input--style-4" type="number" required name="phoneNo">
                                 </div>
                             </div>
+                           
                         </div>
+
                         <div class="row row-space">
+                           
+                            <div class="col-2">
+                                <div class="input-group">
+                                    <label class="label">Address</label>
+                                    <input class="input--style-4" id="" type="text" required name="Address">
+                                </div>
+                            </div>
+                            <div class="col-2">
+                                <div class="input-group">
+                                    <label class="label">Postal Code</label>
+                                    <input class="input--style-4" id="" required type="text" name="PostalCode">
+                                </div>
+                            </div>
+                            <p id="CheckPasswordMatch" style="padding-left: 54%"></p>
+                        </div>
+
+                        <div class="row row-space">
+                           
                             <div class="col-2">
                                 <div class="input-group">
                                     <label class="label">Password</label>
-                                    <input class="input--style-4" type="email" name="password">
+                                    <input class="input--style-4" id="txtNewPassword" type="password" required name="password">
                                 </div>
                             </div>
                             <div class="col-2">
                                 <div class="input-group">
                                     <label class="label">Conform Password</label>
-                                    <input class="input--style-4" type="text">
+                                    <input class="input--style-4" id="txtConfirmPassword" required type="password">
                                 </div>
                             </div>
+                            <p id="CheckPasswordMatch" style="padding-left: 54%"></p>
                         </div>
                         <div class="input-group">
                             <label class="label">Upload Image</label>
-                            <input class="" type="file" name="imgPath">
+                            <input class="" type="file" required name="imgPath">
                         </div>
                         <div class="p-t-15">
-                            <button class="btn btn--radius-2 btn--blue" type="submit">Submit</button>
+                            <button id="submitBtn" class="btn btn--radius-2" style="background-color: #81b840;" type="submit">Submit</button>
                         </div>
                     </form>
                 </div>
@@ -100,6 +121,27 @@
 
     <!-- Main JS-->
     <script src="../signupPageContent/js/global.js"></script>
+
+    <script>
+        function checkPasswordMatch() {
+            var password = $("#txtNewPassword").val();
+            var confirmPassword = $("#txtConfirmPassword").val();
+            if (password != confirmPassword){
+                $("#CheckPasswordMatch").html("Passwords does not match!").css('color','red');;
+                $("#submitBtn"). attr("disabled", true);
+            }
+            else
+             {  
+                 $("#CheckPasswordMatch").html("Passwords match.").css('color','green');
+                 $("#submitBtn"). attr("disabled", false);
+           }
+    }
+        $(document).ready(function () {
+           $("#txtConfirmPassword").keyup(checkPasswordMatch);
+        });
+        </script>
+
+
 
 </body><!-- This templates was made by Colorlib (https://colorlib.com) -->
 

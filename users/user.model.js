@@ -9,7 +9,13 @@ function model(sequelize) {
         username: { type: DataTypes.STRING, allowNull: false },
         hash: { type: DataTypes.STRING, allowNull: false },
         phoneNo: { type: DataTypes.STRING, allowNull: false },
-        imgPath: { type: DataTypes.STRING, allowNull: false }
+        email: { type: DataTypes.STRING, allowNull: false },
+        isActive: { type: DataTypes.STRING, allowNull: false },
+        isDeleted: { type: DataTypes.STRING, allowNull: false },
+        isAdmin: { type: DataTypes.STRING, allowNull: false },
+        imgPath: { type: DataTypes.STRING, allowNull: false },
+        Address: { type: DataTypes.STRING, allowNull: false },
+        PostalCode: { type: DataTypes.STRING, allowNull: false }
     };
 
     const options = {

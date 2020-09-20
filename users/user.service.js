@@ -45,8 +45,8 @@ async function getById(id) {
 async function create(params) {
     // validate
 console.log(params.body+ "body",params.files)
-     if (await db.User.findOne({ where: { username: params.body.username } })) {
-         throw 'Username "' + params.body.username + '" is already taken';
+     if (await db.User.findOne({ where: { email: params.body.email } })) {
+         throw 'Username "' + params.body.email + '" is already taken';
      }
 
     // hash password
@@ -56,7 +56,9 @@ console.log(params.body+ "body",params.files)
 //img upload 
     const file = params.files.imgPath;
     const  name = uuidv4()+'.'+file.name.split('.')[1];
-    file.mv("./uploads/"+ name, function (err, result) {
+//file.mv("./uploads/"+ name, function (err, result) {
+
+    file.mv("content/uploads/"+ name, function (err, result) {
         if (err)
             throw err;
     })
@@ -65,10 +67,16 @@ console.log(params.body+ "body",params.files)
     var dataPost = {
         firstName: params.body.firstName,
         lastName: params.body.lastName,
-        username: params.body.username,
+        username: "null",
         hash: params.body.hash,
         phoneNo: params.body.phoneNo,
-        imgPath: name
+        email: params.body.email,
+        isActive: "1",
+        isDeleted: "0",
+        isAdmin: "0",
+        imgPath: name,
+        PostalCode: params.body.PostalCode,
+        Address: params.body.Address
     };
 
     await db.User.create(dataPost);
@@ -79,9 +87,9 @@ async function update(id, params) {
     const user = await getUser(id);
 
     // validate
-    const usernameChanged = params.username && user.username !== params.username;
-    if (usernameChanged && await db.User.findOne({ where: { username: params.username } })) {
-        throw 'Username "' + params.username + '" is already taken';
+    const usernameChanged = params.email && user.email !== params.email;
+    if (usernameChanged && await db.User.findOne({ where: { email: params.email } })) {
+        throw 'Username "' + params.email + '" is already taken';
     }
 
     // hash password if it was entered
